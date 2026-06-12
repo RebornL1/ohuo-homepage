@@ -83,7 +83,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  min-width: 210px;
+  min-width: min(100%, 360px);
 }
 
 .brand-mark {
@@ -108,6 +108,30 @@ textarea {
 .brand small {
   color: var(--muted);
   font-size: 12px;
+}
+
+.brand-alias {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding-left: 14px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-shadow: 0 0 16px rgba(93, 253, 199, 0.4);
+}
+
+.brand-alias::before {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, var(--blue), var(--coral), transparent);
+  box-shadow: var(--neon-cyan);
+  content: "";
 }
 
 .top-nav {
@@ -844,6 +868,10 @@ h3 {
   .site-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .brand {
+    flex-wrap: wrap;
   }
 
   .top-nav {
