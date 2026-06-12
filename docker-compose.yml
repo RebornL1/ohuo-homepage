@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      APP_NAME: 你的人生学无限
+      DATABASE_URL: postgresql+psycopg://homepage:homepage@postgres:5432/homepage
+      MEDIA_ROOT: /app/media
+      PUBLIC_MEDIA_URL: /media
+      AUTO_SEED: "true"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./media:/app/media
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: homepage
+      POSTGRES_USER: homepage
+      POSTGRES_PASSWORD: homepage
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

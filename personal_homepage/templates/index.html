@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ data.app_name }} | 个人主页</title>
+    <meta
+      name="description"
+      content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark">∞</span>
+        <span>
+          <strong>{{ data.app_name }}</strong>
+          <small>Personal Homepage</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="#knowledge">学习归档</a>
+        <a href="#tools">工具空间</a>
+        <a href="#timeline">时间线</a>
+        <a href="#works">影视作品</a>
+        <a href="#support">打赏</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">个人主页 / 学习档案 / 生活操作台</p>
+          <h1 id="hero-title">把学习、创造和生活记录成一条可回看的长线。</h1>
+          <p class="hero-lead">
+            这里用于归档学习总结、wiki、思考文章、常用小工具、个人作品、生活日记与关键事件。
+            公开内容给游客阅读评论，会员内容参与共创，私密内容只作为个人回溯。
+          </p>
+          <div class="hero-actions" aria-label="快捷入口">
+            <a class="primary-action" href="#knowledge">进入归档</a>
+            <a class="secondary-action" href="#quick-capture">快速记录</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="/assets/home-map.svg" alt="个人主页信息结构图" />
+        </figure>
+      </section>
+
+      <section class="dashboard-band" aria-label="主页概览">
+        <div class="metric">
+          <span id="metricArticles">0</span>
+          <small>学习条目</small>
+        </div>
+        <div class="metric">
+          <span id="metricTools">0</span>
+          <small>自用工具</small>
+        </div>
+        <div class="metric">
+          <span id="metricEvents">0</span>
+          <small>关键事件</small>
+        </div>
+        <div class="metric">
+          <span id="metricWorks">0</span>
+          <small>影视作品</small>
+        </div>
+      </section>
+
+      <section class="section-shell" id="about" aria-labelledby="about-title">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title">关于我</h2>
+        </div>
+        <div class="about-layout">
+          <div class="profile-panel">
+            <div class="avatar" aria-hidden="true">我</div>
+            <div>
+              <h3>主页主人</h3>
+              <p>
+                一个持续学习、写作、做工具、拍作品并记录生活的人。这里先保留为可编辑占位，
+                后续可以替换为真实简介、社交链接、简历与联系方式。
+              </p>
+            </div>
+          </div>
+          <div class="principles" id="principles"></div>
+        </div>
+      </section>
+
+      <section class="section-shell" id="knowledge" aria-labelledby="knowledge-title">
+        <div class="section-heading">
+          <p class="eyebrow">Knowledge Archive</p>
+          <h2 id="knowledge-title">学习总结、Wiki 与思考文章</h2>
+        </div>
+        <div class="toolbar" aria-label="内容筛选">
+          <label class="search-box">
+            <span>搜索</span>
+            <input id="searchInput" type="search" placeholder="主题、标签、文章标题" />
+          </label>
+          <div class="segmented" role="group" aria-label="可见性筛选">
+            <button class="active" type="button" data-filter="all">全部</button>
+            <button type="button" data-filter="public">公开</button>
+            <button type="button" data-filter="member">会员</button>
+            <button type="button" data-filter="private">私密</button>
+          </div>
+        </div>
+        <div class="content-grid" id="articleGrid"></div>
+      </section>
+
+      <section class="section-shell" id="tools" aria-labelledby="tools-title">
+        <div class="section-heading">
+          <p class="eyebrow">Toolbox</p>
+          <h2 id="tools-title">小工具空间</h2>
+        </div>
+        <div class="tool-grid" id="toolGrid"></div>
+      </section>
+
+      <section class="section-shell" id="journal" aria-labelledby="journal-title">
+        <div class="section-heading">
+          <p class="eyebrow">Life Notes</p>
+          <h2 id="journal-title">生活与日记</h2>
+        </div>
+        <div class="journal-list" id="journalList"></div>
+      </section>
+
+      <section class="section-shell" id="quick-capture" aria-labelledby="capture-title">
+        <div class="section-heading">
+          <p class="eyebrow">Quick Capture</p>
+          <h2 id="capture-title">关键事件快速记录</h2>
+        </div>
+        <form class="capture-form" id="captureForm">
+          <label>
+            <span>事件标题</span>
+            <input name="title" required placeholder="例如：完成主页第一版" />
+          </label>
+          <label>
+            <span>日期</span>
+            <input name="date" type="date" required />
+          </label>
+          <label>
+            <span>类型</span>
+            <select name="type">
+              <option value="学习">学习</option>
+              <option value="创作">创作</option>
+              <option value="生活">生活</option>
+              <option value="工具">工具</option>
+            </select>
+          </label>
+          <label>
+            <span>可见性</span>
+            <select name="visibility">
+              <option value="private">私密</option>
+              <option value="public">公开</option>
+              <option value="member">会员</option>
+            </select>
+          </label>
+          <label class="wide">
+            <span>备注</span>
+            <textarea name="note" rows="4" placeholder="发生了什么？为什么值得回看？"></textarea>
+          </label>
+          <button type="submit">保存到数据库</button>
+        </form>
+        <p class="form-note">新增记录会写入数据库；部署时请把数据库和媒体目录纳入备份。</p>
+      </section>
+
+      <section class="section-shell" id="timeline" aria-labelledby="timeline-title">
+        <div class="section-heading">
+          <p class="eyebrow">Timeline</p>
+          <h2 id="timeline-title">时间线回溯</h2>
+        </div>
+        <div class="timeline" id="timelineList"></div>
+      </section>
+
+      <section class="section-shell" id="works" aria-labelledby="works-title">
+        <div class="section-heading">
+          <p class="eyebrow">Film Works</p>
+          <h2 id="works-title">个人影视作品记录</h2>
+        </div>
+        <div class="work-grid" id="workGrid"></div>
+      </section>
+
+      <section class="section-shell support-section" id="support" aria-labelledby="support-title">
+        <div class="section-heading">
+          <p class="eyebrow">Support</p>
+          <h2 id="support-title">微信 / 支付宝打赏</h2>
+        </div>
+        <div class="support-layout">
+          <div class="support-copy">
+            <h3>如果这些记录和工具帮到了你，可以请我喝杯咖啡。</h3>
+            <p>
+              这里先放二维码占位图。把真实收款码上传到媒体目录后，可以在后台配置为
+              <code>/media/wechat-qr.png</code> 和 <code>/media/alipay-qr.png</code>。
+            </p>
+          </div>
+          <div class="qr-grid">
+            <div class="qr-card">
+              <div class="qr-placeholder">微信</div>
+              <span>微信打赏</span>
+            </div>
+            <div class="qr-card">
+              <div class="qr-placeholder">支付宝</div>
+              <span>支付宝打赏</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>© <span id="year"></span> {{ data.app_name }}</span>
+      <a href="#top">回到顶部</a>
+    </footer>
+
+    <script>
+      window.__HOME_DATA__ = {{ data | tojson }};
+    </script>
+    <script src="{{ url_for('static', path='app.js') }}"></script>
+  </body>
+</html>
