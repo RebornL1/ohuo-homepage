@@ -204,12 +204,24 @@ h1 {
 
 .hero-statement {
   max-width: 680px;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   color: var(--green);
   font-size: clamp(24px, 3.4vw, 38px);
   font-weight: 800;
   line-height: 1.18;
   text-shadow: 0 0 18px rgba(93, 253, 199, 0.32);
+}
+
+.hero-side-quest {
+  max-width: 700px;
+  margin-bottom: 22px;
+  color: transparent;
+  background: linear-gradient(90deg, var(--coral), var(--amber) 58%, var(--blue));
+  background-clip: text;
+  font-size: clamp(21px, 2.7vw, 32px);
+  font-weight: 800;
+  line-height: 1.24;
+  text-shadow: 0 0 18px rgba(255, 79, 216, 0.28), 0 0 22px rgba(255, 230, 109, 0.18);
 }
 
 h2 {
@@ -807,6 +819,10 @@ h3 {
 
   .hero-statement {
     font-size: 24px;
+  }
+
+  .hero-side-quest {
+    font-size: 21px;
   }
 
   .hero-lead {
