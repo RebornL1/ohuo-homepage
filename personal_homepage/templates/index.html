@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-6" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-7" />
   </head>
   <body>
     <header class="site-header">
@@ -61,22 +61,26 @@
       </section>
 
       <section class="dashboard-band" aria-label="主页概览">
-        <div class="metric">
+        <a class="metric" href="#knowledge">
+          <strong>Archive</strong>
           <span id="metricArticles">0</span>
           <small>学习条目</small>
-        </div>
-        <div class="metric">
+        </a>
+        <a class="metric" href="#tools">
+          <strong>Tools</strong>
           <span id="metricTools">0</span>
           <small>自用工具</small>
-        </div>
-        <div class="metric">
+        </a>
+        <a class="metric" href="#timeline">
+          <strong>Timeline</strong>
           <span id="metricEvents">0</span>
           <small>关键事件</small>
-        </div>
-        <div class="metric">
+        </a>
+        <a class="metric" href="#works">
+          <strong>Works</strong>
           <span id="metricWorks">0</span>
           <small>影视作品</small>
-        </div>
+        </a>
       </section>
 
       <section class="section-shell" id="about" aria-labelledby="about-title">
@@ -226,6 +230,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-6"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-7"></script>
   </body>
 </html>
