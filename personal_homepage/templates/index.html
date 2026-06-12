@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-5" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-6" />
   </head>
   <body>
     <header class="site-header">
@@ -40,8 +40,7 @@
               <span>生活时间线</span>
               <span>作品记录</span>
             </p>
-            <h1 id="hero-title">哦呼0<span class="title-underscore">_</span>0的个人主页</h1>
-            <p class="hero-statement">把学习、创造和生活记录成一条可回看的长线。</p>
+            <h1 id="hero-title" class="hero-statement">把学习、创造和生活记录成一条可回看的长线。</h1>
             <p class="hero-side-quest">或者当个生活支线玩家也挺好，意义是自己赋予的不是吗？</p>
             <div class="hero-actions" aria-label="快捷入口">
               <a class="primary-action" href="#knowledge">进入归档</a>
@@ -227,6 +226,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-5"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-6"></script>
   </body>
 </html>

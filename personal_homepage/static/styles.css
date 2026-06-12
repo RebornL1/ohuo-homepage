@@ -250,34 +250,21 @@ p {
 
 h1 {
   margin-bottom: 14px;
-  font-size: clamp(38px, 7vw, 78px);
+  font-size: clamp(38px, 6vw, 62px);
   line-height: 1.12;
   letter-spacing: 0;
   color: transparent;
-  background: linear-gradient(90deg, #ffffff, var(--blue) 42%, var(--coral) 78%, var(--amber));
+  background: linear-gradient(90deg, var(--green), var(--blue) 62%, var(--amber));
   background-clip: text;
   padding-bottom: 0.08em;
-  text-shadow: 0 0 34px rgba(53, 215, 255, 0.28);
-}
-
-.title-underscore {
-  display: inline-block;
-  color: var(--amber);
-  background: none;
-  background-clip: initial;
-  -webkit-text-fill-color: var(--amber);
-  text-shadow: 0 0 18px rgba(255, 230, 109, 0.72), 0 0 28px rgba(53, 215, 255, 0.32);
-  transform: translateY(-0.01em);
+  text-shadow: 0 0 28px rgba(93, 253, 199, 0.3);
 }
 
 .hero-statement {
   max-width: 680px;
   margin-bottom: 10px;
-  color: var(--green);
-  font-size: clamp(24px, 3.4vw, 38px);
   font-weight: 800;
   line-height: 1.18;
-  text-shadow: 0 0 18px rgba(93, 253, 199, 0.32);
 }
 
 .hero-side-quest {
