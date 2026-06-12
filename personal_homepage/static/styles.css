@@ -88,6 +88,7 @@ textarea {
   align-items: center;
   gap: 12px;
   min-width: min(100%, 360px);
+  z-index: 2;
 }
 
 .brand-mark {
@@ -115,26 +116,34 @@ textarea {
 }
 
 .brand-alias {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
-  min-height: 26px;
-  padding-left: 14px;
-  color: var(--green);
-  font-size: 13px;
-  font-weight: 800;
+  justify-content: center;
+  min-height: 36px;
+  padding: 2px 16px 4px;
+  color: transparent;
+  background: linear-gradient(90deg, var(--green), var(--blue) 46%, var(--coral) 78%, var(--amber));
+  background-clip: text;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 900;
+  line-height: 1.08;
+  transform: translateX(-50%);
   white-space: nowrap;
-  text-shadow: 0 0 16px rgba(93, 253, 199, 0.4);
+  text-align: center;
+  text-shadow: 0 0 22px rgba(53, 215, 255, 0.26), 0 0 18px rgba(255, 79, 216, 0.2);
 }
 
 .brand-alias::before {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, var(--blue), var(--coral), transparent);
-  box-shadow: var(--neon-cyan);
+  right: 12px;
+  bottom: 0;
+  left: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue), var(--coral), transparent);
+  box-shadow: 0 0 18px rgba(53, 215, 255, 0.5);
   content: "";
 }
 
@@ -143,6 +152,7 @@ textarea {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 6px;
+  z-index: 2;
 }
 
 .top-nav a {
@@ -1594,16 +1604,25 @@ h3 {
 
 @media (max-width: 980px) {
   .site-header {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
   }
 
   .brand {
+    justify-content: center;
     flex-wrap: wrap;
   }
 
+  .brand-alias {
+    position: relative;
+    left: auto;
+    flex-basis: 100%;
+    margin-top: 4px;
+    transform: none;
+  }
+
   .top-nav {
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .hero-section,
