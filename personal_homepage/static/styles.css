@@ -188,11 +188,8 @@ main::before {
 }
 
 .hero-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.46fr);
-  align-items: start;
-  gap: clamp(18px, 3vw, 30px);
-  max-width: 860px;
+  display: block;
+  max-width: 720px;
 }
 
 .hero-main {
@@ -273,7 +270,7 @@ h1 {
 
 .hero-side-quest {
   max-width: 700px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
   color: transparent;
   background: linear-gradient(90deg, var(--coral), var(--amber) 58%, var(--blue));
   background-clip: text;
@@ -300,26 +297,32 @@ h3 {
   margin: 0;
   max-width: 100%;
   color: var(--muted);
-  font-size: 15px;
-  line-height: 1.72;
+  font-size: 15.5px;
+  line-height: 1.78;
 }
 
 .hero-note {
   position: relative;
-  margin-top: 74px;
-  padding: 16px 16px 18px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(53, 215, 255, 0.055));
-  border: 1px solid rgba(53, 215, 255, 0.24);
-  border-left: 3px solid var(--blue);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  max-width: 660px;
+  margin: 0 0 22px;
+  padding: 16px 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.055) 48%, rgba(53, 215, 255, 0.04)),
+    rgba(19, 29, 43, 0.42);
+  border: 1px solid rgba(232, 240, 255, 0.18);
   border-radius: 8px;
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22), inset 0 1px rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(28px) saturate(170%);
 }
 
 .hero-note::before {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   width: 7px;
   height: 7px;
   background: var(--green);
@@ -330,7 +333,13 @@ h3 {
 
 .hero-note span {
   display: inline-flex;
-  margin-bottom: 8px;
+  align-items: center;
+  min-height: 25px;
+  padding: 3px 9px;
+  margin-top: 1px;
+  background: rgba(255, 230, 109, 0.12);
+  border: 1px solid rgba(255, 230, 109, 0.22);
+  border-radius: 999px;
   color: var(--amber);
   font-size: 12px;
   font-weight: 800;
@@ -341,7 +350,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 0;
 }
 
 .primary-action,
@@ -1603,10 +1612,6 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .hero-copy {
-    grid-template-columns: minmax(0, 1fr) minmax(210px, 0.38fr);
-  }
-
   .hero-section {
     min-height: auto;
   }
@@ -1665,11 +1670,8 @@ h3 {
 }
 
 @media (max-width: 760px) {
-  .hero-copy {
-    grid-template-columns: 1fr;
-  }
-
   .hero-note {
+    grid-template-columns: 1fr;
     margin-top: 2px;
   }
 }
