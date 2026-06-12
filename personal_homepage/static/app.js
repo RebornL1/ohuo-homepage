@@ -110,20 +110,107 @@ function renderTools() {
     `;
 }
 
+function renderSelfDistillation() {
+  const items = data.self_distillation || [];
+  const hotwords = data.self_hotwords || [];
+  const firstHotword = hotwords[0];
+  document.querySelector("#selfConsole").innerHTML = `
+    <div class="self-map">
+      <div class="self-core">
+        <span>SELF</span>
+        <strong>哦呼0_0</strong>
+        <small>猎奇 / 记录 / 复盘 / 共创</small>
+      </div>
+      ${items
+        .map(
+          (item, index) => `
+            <article class="self-card self-card-${index + 1}">
+              <div class="self-card-head">
+                <span>${escapeHtml(item.signal)}</span>
+                <strong>${escapeHtml(item.metric)}</strong>
+              </div>
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.summary)}</p>
+              <div class="self-tags">
+                ${(item.items || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+              </div>
+              <small>${escapeHtml(item.source)} · ${escapeHtml(item.unit)}</small>
+            </article>
+          `
+        )
+        .join("")}
+    </div>
+    <div class="hotword-console">
+      <div class="hotword-panel">
+        <span class="hotword-panel-label">ENFP Curiosity Cloud</span>
+        <h3>把生活拆成可点击的热词</h3>
+        <p>吃饭、游戏、心理学、阅读、健身、城市漫游、影像创作、怪知识和关系体验都可以成为自我数据入口。</p>
+        <div class="hotword-detail" aria-live="polite">
+          <span>${escapeHtml(firstHotword?.domain || "领域")}</span>
+          <strong>${escapeHtml(firstHotword?.label || "热词")}</strong>
+          <p>${escapeHtml(firstHotword?.note || "点击任意热词查看它如何成为主页里的一个自我切片。")}</p>
+        </div>
+      </div>
+      <div class="hotword-cloud" aria-label="可点击兴趣热词">
+        ${hotwords
+          .map(
+            (word, index) => `
+              <button class="hotword-chip ${index === 0 ? "active" : ""}" type="button" data-index="${index}">
+                ${escapeHtml(word.label)}
+              </button>
+            `
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
 function renderJournals() {
-  document.querySelector("#journalList").innerHTML = data.journals
-    .map(
-      (entry) => `
-        <article class="journal-item">
-          <time>${entry.written_at}</time>
-          <div>
-            <h3>${escapeHtml(entry.title)}</h3>
-            <p>${escapeHtml(entry.body)}</p>
-          </div>
-        </article>
-      `
-    )
-    .join("");
+  const journals = [...data.journals].sort((a, b) => b.written_at.localeCompare(a.written_at));
+  const selected = journals[0];
+  const monthDate = new Date(`${selected.written_at}T00:00:00`);
+  const year = monthDate.getFullYear();
+  const month = monthDate.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const entryByDate = new Map(journals.map((entry) => [entry.written_at, entry]));
+  const blanks = Array.from({ length: firstDay.getDay() }, () => `<span class="calendar-blank"></span>`);
+  const days = Array.from({ length: daysInMonth }, (_, index) => {
+    const day = index + 1;
+    const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const entry = entryByDate.get(dateKey);
+    const isSelected = selected.written_at === dateKey;
+    if (!entry) {
+      return `<span class="calendar-day muted">${day}</span>`;
+    }
+    return `
+      <button class="calendar-day has-entry ${isSelected ? "active" : ""}" type="button" data-date="${dateKey}">
+        <span>${day}</span>
+      </button>
+    `;
+  });
+
+  document.querySelector("#journalList").innerHTML = `
+    <div class="journal-console">
+      <div class="journal-calendar" aria-label="生活随笔日历">
+        <div class="calendar-head">
+          <span>Life Calendar</span>
+          <strong>${year}.${String(month + 1).padStart(2, "0")}</strong>
+        </div>
+        <div class="calendar-weekdays" aria-hidden="true">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div class="calendar-grid">${[...blanks, ...days].join("")}</div>
+      </div>
+      <article class="journal-reader" aria-live="polite">
+        <span class="journal-reader-label">Selected Note</span>
+        <time>${selected.written_at}</time>
+        <h3>${escapeHtml(selected.title)}</h3>
+        <p>${escapeHtml(selected.body)}</p>
+      </article>
+    </div>
+  `;
 }
 
 function renderTimeline() {
@@ -216,6 +303,35 @@ function bindEvents() {
     renderMetrics();
     document.querySelector("#timeline").scrollIntoView({ behavior: "smooth" });
   });
+
+  document.querySelector("#journalList").addEventListener("click", (event) => {
+    const button = event.target.closest(".calendar-day.has-entry");
+    if (!button) return;
+    const entry = data.journals.find((item) => item.written_at === button.dataset.date);
+    if (!entry) return;
+    document.querySelectorAll(".calendar-day.has-entry").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    document.querySelector(".journal-reader").innerHTML = `
+      <span class="journal-reader-label">Selected Note</span>
+      <time>${entry.written_at}</time>
+      <h3>${escapeHtml(entry.title)}</h3>
+      <p>${escapeHtml(entry.body)}</p>
+    `;
+  });
+
+  document.querySelector("#selfConsole").addEventListener("click", (event) => {
+    const button = event.target.closest(".hotword-chip");
+    if (!button) return;
+    const word = (data.self_hotwords || [])[Number(button.dataset.index)];
+    if (!word) return;
+    document.querySelectorAll(".hotword-chip").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    document.querySelector(".hotword-detail").innerHTML = `
+      <span>${escapeHtml(word.domain)}</span>
+      <strong>${escapeHtml(word.label)}</strong>
+      <p>${escapeHtml(word.note)}</p>
+    `;
+  });
 }
 
 function setDefaultDate() {
@@ -228,6 +344,7 @@ function init() {
   renderPrinciples();
   renderArticles();
   renderTools();
+  renderSelfDistillation();
   renderJournals();
   renderTimeline();
   renderWorks();

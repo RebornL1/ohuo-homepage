@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-10" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-12" />
   </head>
   <body>
     <header class="site-header">
@@ -22,6 +22,7 @@
       </a>
       <nav class="top-nav" aria-label="主导航">
         <a href="#knowledge">学习归档</a>
+        <a href="#self-distill">自我蒸馏</a>
         <a href="#tools">工具空间</a>
         <a href="#timeline">时间线</a>
         <a href="#works">影视作品</a>
@@ -83,6 +84,14 @@
         </a>
       </section>
 
+      <section class="section-shell" id="self-distill" aria-labelledby="self-title">
+        <div class="section-heading">
+          <p class="eyebrow">Self Distillation</p>
+          <h2 id="self-title">把整个人蒸馏成可回看的信号</h2>
+        </div>
+        <div class="self-console" id="selfConsole"></div>
+      </section>
+
       <section class="section-shell" id="about" aria-labelledby="about-title">
         <div class="section-heading">
           <p class="eyebrow">About</p>
@@ -135,8 +144,8 @@
 
       <section class="section-shell" id="journal" aria-labelledby="journal-title">
         <div class="section-heading">
-          <p class="eyebrow">Life Notes</p>
-          <h2 id="journal-title">生活与日记</h2>
+          <p class="eyebrow">Toolbox / Life Calendar</p>
+          <h2 id="journal-title">生活随笔日历</h2>
         </div>
         <div class="journal-list" id="journalList"></div>
       </section>
@@ -232,6 +241,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-10"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-12"></script>
   </body>
 </html>
