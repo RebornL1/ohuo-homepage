@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-9" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-10" />
   </head>
   <body>
     <header class="site-header">
@@ -124,11 +124,13 @@
       </section>
 
       <section class="section-shell" id="tools" aria-labelledby="tools-title">
-        <div class="section-heading">
-          <p class="eyebrow">Toolbox</p>
-          <h2 id="tools-title">小工具空间</h2>
+        <div class="tool-console">
+          <div class="section-heading">
+            <p class="eyebrow">Toolbox</p>
+            <h2 id="tools-title">小工具空间</h2>
+          </div>
+          <div class="tool-grid" id="toolGrid"></div>
         </div>
-        <div class="tool-grid" id="toolGrid"></div>
       </section>
 
       <section class="section-shell" id="journal" aria-labelledby="journal-title">
@@ -230,6 +232,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-9"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-10"></script>
   </body>
 </html>

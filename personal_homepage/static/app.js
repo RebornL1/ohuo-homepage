@@ -73,12 +73,29 @@ function renderArticles() {
 }
 
 function renderTools() {
-  document.querySelector("#toolGrid").innerHTML = data.tools
+  document.querySelector("#toolGrid").innerHTML = `
+      <aside class="tool-rail" aria-label="工具状态索引">
+        <span class="tool-rail-label">Tool Stack</span>
+        ${data.tools
+          .map(
+            (tool, index) => `
+              <a class="tool-rail-item" href="#tool-${index + 1}">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <strong>${escapeHtml(tool.name)}</strong>
+                <small>${escapeHtml(tool.status)}</small>
+              </a>
+            `
+          )
+          .join("")}
+      </aside>
+      <div class="tool-stage">
+        ${data.tools
     .map(
-      (tool) => `
-        <article class="tool-card">
+      (tool, index) => `
+        <article class="tool-card ${index === 0 ? "featured" : ""}" id="tool-${index + 1}">
           <div class="card-topline">
             <span class="badge public">${escapeHtml(tool.status)}</span>
+            <span class="tool-index">${String(index + 1).padStart(2, "0")}</span>
           </div>
           <h3>${escapeHtml(tool.name)}</h3>
           <p>${escapeHtml(tool.description)}</p>
@@ -88,7 +105,9 @@ function renderTools() {
         </article>
       `
     )
-    .join("");
+    .join("")}
+      </div>
+    `;
 }
 
 function renderJournals() {
