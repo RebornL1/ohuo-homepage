@@ -380,6 +380,12 @@ h3 {
   box-shadow: 0 0 24px rgba(255, 230, 109, 0.24), var(--neon-cyan);
 }
 
+.capture-form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .hero-visual {
   margin: 0;
 }
@@ -1336,48 +1342,139 @@ h3 {
   font-size: 18px;
 }
 
+.milestone-section {
+  position: relative;
+}
+
+.milestone-intro {
+  max-width: 760px;
+  margin: -18px 0 18px auto;
+  color: var(--muted);
+  text-align: right;
+}
+
 .capture-form {
+  position: relative;
   display: grid;
-  grid-template-columns: 1.1fr 180px 160px 160px auto;
-  align-items: end;
-  gap: 12px;
-  padding: 18px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(160px, 0.32fr) minmax(150px, 0.28fr) minmax(150px, 0.28fr);
+  gap: 14px;
+  padding: clamp(16px, 3vw, 26px);
+  overflow: hidden;
   background: var(--glass-bg);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(22px) saturate(145%);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(30px) saturate(170%);
+}
+
+.capture-form::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 16%, rgba(255, 255, 255, 0.14), transparent 28%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px) 0 0 / 42px 42px;
+  content: "";
+}
+
+.capture-form > * {
+  position: relative;
+  z-index: 1;
 }
 
 .capture-form label {
   display: grid;
-  gap: 6px;
+  gap: 7px;
 }
 
 .capture-form span {
   color: var(--muted);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .capture-form input,
 .capture-form select,
 .capture-form textarea {
   width: 100%;
-  min-height: 44px;
-  padding: 9px 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: rgba(3, 7, 18, 0.46);
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid rgba(232, 240, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(4, 8, 18, 0.34);
   color: var(--ink);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.capture-form textarea {
+  resize: vertical;
+}
+
+.capture-form input:focus,
+.capture-form select:focus,
+.capture-form textarea:focus {
+  border-color: rgba(180, 228, 255, 0.45);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(53, 215, 255, 0.1), inset 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .capture-form .wide {
   grid-column: 1 / -1;
 }
 
+.media-uploader {
+  min-height: 152px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px dashed rgba(180, 228, 255, 0.3);
+  border-radius: 10px;
+}
+
+.media-uploader input[type="file"] {
+  min-height: 52px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.media-uploader strong {
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.media-uploader small {
+  color: var(--muted);
+}
+
+.media-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 34px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.media-preview span {
+  max-width: 100%;
+  padding: 5px 9px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: #d7e4f5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.capture-form button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-width: min(100%, 260px);
+}
+
 .form-note {
-  margin-top: 10px;
+  margin-top: 12px;
   color: var(--muted);
   font-size: 14px;
 }
@@ -1558,6 +1655,12 @@ h3 {
 
   .tool-card.featured {
     grid-row: auto;
+  }
+
+  .milestone-intro {
+    margin-top: -8px;
+    margin-left: 0;
+    text-align: left;
   }
 }
 

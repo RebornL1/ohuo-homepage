@@ -273,6 +273,35 @@ async function createTimelineEvent(payload) {
   return response.json();
 }
 
+async function uploadMilestoneMedia(files) {
+  const uploads = [];
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch("/api/media", {
+      method: "POST",
+      body: formData
+    });
+    if (!response.ok) {
+      throw new Error(`媒体上传失败：${file.name}`);
+    }
+    uploads.push(await response.json());
+  }
+  return uploads;
+}
+
+function renderMediaPreview(files) {
+  const preview = document.querySelector("#mediaPreview");
+  if (!preview) return;
+  if (!files.length) {
+    preview.textContent = "尚未选择媒体";
+    return;
+  }
+  preview.innerHTML = files
+    .map((file) => `<span>${escapeHtml(file.name)}</span>`)
+    .join("");
+}
+
 function bindEvents() {
   searchInput.addEventListener("input", renderArticles);
   filterButtons.forEach((button) => {
@@ -284,24 +313,49 @@ function bindEvents() {
     });
   });
 
-  document.querySelector("#captureForm").addEventListener("submit", async (event) => {
+  const captureForm = document.querySelector("#captureForm");
+  const captureStatus = document.querySelector("#captureStatus");
+  const mediaInput = captureForm.querySelector('input[name="media"]');
+
+  mediaInput.addEventListener("change", () => {
+    renderMediaPreview([...mediaInput.files]);
+  });
+
+  captureForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const saved = await createTimelineEvent({
-      title: formData.get("title"),
-      date: formData.get("date"),
-      type: formData.get("type"),
-      note: formData.get("note") || "无备注",
-      visibility: formData.get("visibility")
-    });
-    data.timeline.unshift(saved);
-    data.timeline.sort((a, b) => b.happened_at.localeCompare(a.happened_at));
-    form.reset();
-    setDefaultDate();
-    renderTimeline();
-    renderMetrics();
-    document.querySelector("#timeline").scrollIntoView({ behavior: "smooth" });
+    const button = form.querySelector('button[type="submit"]');
+    const files = [...mediaInput.files];
+    button.disabled = true;
+    button.textContent = files.length ? "上传媒体中..." : "保存中...";
+    captureStatus.textContent = files.length ? "正在上传媒体并保存里程碑..." : "正在保存里程碑...";
+    try {
+      const uploads = await uploadMilestoneMedia(files);
+      const mediaLines = uploads.map((asset) => `媒体：${asset.public_url}`).join("\n");
+      const note = [formData.get("note") || "无备注", mediaLines].filter(Boolean).join("\n\n");
+      const saved = await createTimelineEvent({
+        title: formData.get("title"),
+        date: formData.get("date"),
+        type: formData.get("type"),
+        note,
+        visibility: formData.get("visibility")
+      });
+      data.timeline.unshift(saved);
+      data.timeline.sort((a, b) => b.happened_at.localeCompare(a.happened_at));
+      form.reset();
+      setDefaultDate();
+      renderMediaPreview([]);
+      renderTimeline();
+      renderMetrics();
+      captureStatus.textContent = "里程碑已保存。媒体链接已经写入这条时间线记录。";
+      document.querySelector("#timeline").scrollIntoView({ behavior: "smooth" });
+    } catch (error) {
+      captureStatus.textContent = error.message || "保存失败，请稍后重试。";
+    } finally {
+      button.disabled = false;
+      button.textContent = "保存里程碑";
+    }
   });
 
   document.querySelector("#journalList").addEventListener("click", (event) => {

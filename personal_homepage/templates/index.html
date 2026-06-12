@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-12" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-13" />
   </head>
   <body>
     <header class="site-header">
@@ -45,7 +45,7 @@
             <p class="hero-side-quest">或者当个生活支线玩家也挺好，意义是自己赋予的不是吗？</p>
             <div class="hero-actions" aria-label="快捷入口">
               <a class="primary-action" href="#knowledge">进入归档</a>
-              <a class="secondary-action" href="#quick-capture">快速记录</a>
+              <a class="secondary-action" href="#quick-capture">记录里程碑</a>
             </div>
           </div>
           <aside class="hero-note" aria-label="主页备注">
@@ -150,27 +150,34 @@
         <div class="journal-list" id="journalList"></div>
       </section>
 
-      <section class="section-shell" id="quick-capture" aria-labelledby="capture-title">
+      <section class="section-shell milestone-section" id="quick-capture" aria-labelledby="capture-title">
         <div class="section-heading">
-          <p class="eyebrow">Quick Capture</p>
-          <h2 id="capture-title">关键事件快速记录</h2>
+          <p class="eyebrow">Milestone</p>
+          <h2 id="capture-title">人生里程碑记录</h2>
         </div>
+        <p class="milestone-intro">
+          只记录值得回看的节点：完成、转折、开始、告别、作品发布、身体变化、旅行见闻或一次突然明白自己的瞬间。
+        </p>
         <form class="capture-form" id="captureForm">
           <label>
-            <span>事件标题</span>
-            <input name="title" required placeholder="例如：完成主页第一版" />
+            <span>里程碑标题</span>
+            <input name="title" required placeholder="例如：完成主页第一版 / 第一次系统健身打卡" />
           </label>
           <label>
             <span>日期</span>
             <input name="date" type="date" required />
           </label>
           <label>
-            <span>类型</span>
+            <span>领域</span>
             <select name="type">
               <option value="学习">学习</option>
               <option value="创作">创作</option>
               <option value="生活">生活</option>
               <option value="工具">工具</option>
+              <option value="运动">运动</option>
+              <option value="旅行">旅行</option>
+              <option value="关系">关系</option>
+              <option value="作品">作品</option>
             </select>
           </label>
           <label>
@@ -182,12 +189,19 @@
             </select>
           </label>
           <label class="wide">
-            <span>备注</span>
-            <textarea name="note" rows="4" placeholder="发生了什么？为什么值得回看？"></textarea>
+            <span>回看记录</span>
+            <textarea name="note" rows="5" placeholder="发生了什么？当时的状态是什么？它为什么值得未来的我回看？"></textarea>
           </label>
-          <button type="submit">保存到数据库</button>
+          <label class="wide media-uploader">
+            <span>图片 / 视频</span>
+            <input name="media" type="file" accept="image/*,video/*" multiple />
+            <strong>手机可直接选择照片、视频或拍摄内容</strong>
+            <small>支持 jpg、png、gif、webp、mp4、mov、pdf；上传后会自动写入这条里程碑。</small>
+            <div class="media-preview" id="mediaPreview">尚未选择媒体</div>
+          </label>
+          <button type="submit">保存里程碑</button>
         </form>
-        <p class="form-note">新增记录会写入数据库；部署时请把数据库和媒体目录纳入备份。</p>
+        <p class="form-note" id="captureStatus">里程碑会写入数据库；媒体文件会进入服务器媒体目录，部署时请把数据库和 NFS/NAS 媒体目录一起备份。</p>
       </section>
 
       <section class="section-shell" id="timeline" aria-labelledby="timeline-title">
@@ -241,6 +255,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-12"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-13"></script>
   </body>
 </html>
