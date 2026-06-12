@@ -8,7 +8,7 @@
       name="description"
       content="个人知识库、工具空间、生活日记、关键事件时间线、影视作品与打赏入口。"
     />
-    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-1" />
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=cyberpunk-2" />
   </head>
   <body>
     <header class="site-header">
@@ -32,7 +32,7 @@
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">个人主页 / 学习档案 / 生活操作台</p>
-          <h1 id="hero-title">哦呼0_0的个人主页</h1>
+          <h1 id="hero-title">哦呼0<span class="title-underscore">_</span>0的个人主页</h1>
           <p class="hero-statement">把学习、创造和生活记录成一条可回看的长线。</p>
           <p class="hero-lead">
             这里用于归档学习总结、wiki、思考文章、常用小工具、个人作品、生活日记与关键事件。
@@ -214,6 +214,6 @@
     <script>
       window.__HOME_DATA__ = {{ data | tojson }};
     </script>
-    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-1"></script>
+    <script src="{{ url_for('static', path='app.js') }}?v=cyberpunk-2"></script>
   </body>
 </html>

@@ -183,12 +183,23 @@ p {
 h1 {
   margin-bottom: 14px;
   font-size: clamp(38px, 7vw, 78px);
-  line-height: 1.05;
+  line-height: 1.12;
   letter-spacing: 0;
   color: transparent;
   background: linear-gradient(90deg, #ffffff, var(--blue) 42%, var(--coral) 78%, var(--amber));
   background-clip: text;
+  padding-bottom: 0.08em;
   text-shadow: 0 0 34px rgba(53, 215, 255, 0.28);
+}
+
+.title-underscore {
+  display: inline-block;
+  color: var(--amber);
+  background: none;
+  background-clip: initial;
+  -webkit-text-fill-color: var(--amber);
+  text-shadow: 0 0 18px rgba(255, 230, 109, 0.72), 0 0 28px rgba(53, 215, 255, 0.32);
+  transform: translateY(-0.01em);
 }
 
 .hero-statement {
